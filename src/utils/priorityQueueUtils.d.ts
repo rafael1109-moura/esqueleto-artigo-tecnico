@@ -2,6 +2,8 @@ import type { PriorityQueueItem, PriorityQueueMode } from '../types'
 
 export function comparePriority(firstItem: PriorityQueueItem, secondItem: PriorityQueueItem): number
 
+export function sortByPriority(queue: PriorityQueueItem[]): PriorityQueueItem[]
+
 export function createPriorityQueueItem(value: string, priority: number): PriorityQueueItem
 
 export function insertUnordered(queue: PriorityQueueItem[], item: PriorityQueueItem): PriorityQueueItem[]
@@ -13,6 +15,8 @@ export function insertByMode(
   item: PriorityQueueItem,
   mode: PriorityQueueMode,
 ): PriorityQueueItem[]
+
+export function normalizeQueueForMode(queue: PriorityQueueItem[], mode: PriorityQueueMode): PriorityQueueItem[]
 
 export function findHighestPriorityIndex(queue: PriorityQueueItem[]): number
 
@@ -36,3 +40,5 @@ export function removeHighestPriorityByMode(
   removedItem: PriorityQueueItem | null
   inspectedCount: number
 }
+
+export function getHighestPriorityItem(queue: PriorityQueueItem[]): PriorityQueueItem | null

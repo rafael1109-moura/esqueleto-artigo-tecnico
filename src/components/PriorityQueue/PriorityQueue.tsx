@@ -1,22 +1,55 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import type { FormEvent } from 'react'
 import type { PriorityQueueItem, PriorityQueueMode } from '../../types'
 import {
   createPriorityQueueItem,
+  getHighestPriorityItem,
   insertByMode,
+  normalizeQueueForMode,
   removeHighestPriorityByMode,
 } from '../../utils/priorityQueueUtils'
 
 type QueueMessage = {
-  tone: 'neutral' | 'success'
+  tone: 'neutral' | 'success' | 'error'
   text: string
 }
 
 const initialItems: PriorityQueueItem[] = [
-  { id: 'priority-example-1', value: 'A', priority: 2 },
-  { id: 'priority-example-2', value: 'B', priority: 5 },
-  { id: 'priority-example-3', value: 'C', priority: 3 },
+  { id: 'priority-example-1', value: 'Fazer atividade', priority: 3 },
+  { id: 'priority-example-2', value: 'Estudar prova', priority: 5 },
+  { id: 'priority-example-3', value: 'Responder e-mail', priority: 1 },
+  { id: 'priority-example-4', value: 'Revisar codigo', priority: 4 },
 ]
+
+function getModeDescription(mode: PriorityQueueMode) {
+  if (mode === 'ordered') {
+    return 'Insercao reorganiza a lista por prioridade. Remocao sai direto do primeiro item.'
+  }
+
+  return 'Insercao vai para o final. Remocao percorre a lista para buscar a maior prioridade.'
+}
+
+function parsePriorityInput(priority: string) {
+  const numericPriority = Number(priority)
+
+  if (!Number.isFinite(numericPriority) || numericPriority < 0) {
+    return null
+  }
+
+  return numericPriority
+}
+
+function getPriorityItemClass(item: PriorityQueueItem, highestPriorityItem: PriorityQueueItem | null) {
+  const classes = ['priority-item']
+
+  if (item.id === highestPriorityItem?.id) {
+    classes.push('highest')
+  } else if (item.priority >= 4) {
+    classes.push('high')
+  }
+
+  return classes.join(' ')
+}
 
 export function PriorityQueue() {
   const [mode, setMode] = useState<PriorityQueueMode>('unordered')
@@ -28,35 +61,34 @@ export function PriorityQueue() {
     text: 'Insira itens e remova sempre o elemento com maior prioridade.',
   })
 
-  const modeDescription = useMemo(() => {
-    if (mode === 'ordered') {
-      return 'Insercao reorganiza a lista por prioridade; remocao sai direto do inicio.'
-    }
-
-    return 'Insercao vai para o final; remocao percorre a lista para encontrar a maior prioridade.'
-  }, [mode])
+  const highestPriorityItem = getHighestPriorityItem(queue)
+  const modeDescription = getModeDescription(mode)
 
   function handleModeChange(nextMode: PriorityQueueMode) {
     setMode(nextMode)
-    setQueue((currentQueue) => {
-      // Ao trocar para ordenada, refletimos visualmente a regra do modo.
-      if (nextMode === 'ordered') {
-        return currentQueue.toSorted((firstItem, secondItem) => secondItem.priority - firstItem.priority)
-      }
-
-      return currentQueue
+    setQueue((currentQueue) => normalizeQueueForMode(currentQueue, nextMode))
+    setMessage({
+      tone: 'neutral',
+      text:
+        nextMode === 'ordered'
+          ? 'Modo ordenado ativo: a maior prioridade fica no inicio.'
+          : 'Modo nao ordenado ativo: novos itens entram no final e a remocao faz busca.',
     })
-    setMessage({ tone: 'neutral', text: nextMode === 'ordered' ? 'Modo ordenado ativo.' : 'Modo nao ordenado ativo.' })
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const trimmedValue = value.trim()
-    const numericPriority = Number(priority)
+    const numericPriority = parsePriorityInput(priority)
 
-    if (!trimmedValue || Number.isNaN(numericPriority)) {
-      setMessage({ tone: 'neutral', text: 'Informe um valor e uma prioridade numerica.' })
+    if (!trimmedValue) {
+      setMessage({ tone: 'error', text: 'Informe um valor para inserir na lista.' })
+      return
+    }
+
+    if (numericPriority === null) {
+      setMessage({ tone: 'error', text: 'Informe uma prioridade numerica maior ou igual a zero.' })
       return
     }
 
@@ -68,8 +100,8 @@ export function PriorityQueue() {
       tone: 'success',
       text:
         mode === 'ordered'
-          ? `Valor ${item.value} inserido mantendo a lista ordenada por prioridade.`
-          : `Valor ${item.value} inserido no final da lista.`,
+          ? `${item.value} entrou e a lista foi reorganizada por prioridade.`
+          : `${item.value} entrou no final da lista nao ordenada.`,
     })
   }
 
@@ -77,7 +109,7 @@ export function PriorityQueue() {
     const result = removeHighestPriorityByMode(queue, mode)
 
     if (!result.removedItem) {
-      setMessage({ tone: 'neutral', text: 'A lista esta vazia.' })
+      setMessage({ tone: 'neutral', text: 'A lista esta vazia. Insira um item para continuar.' })
       return
     }
 
@@ -86,8 +118,8 @@ export function PriorityQueue() {
       tone: 'success',
       text:
         mode === 'ordered'
-          ? `Removido ${result.removedItem.value} diretamente do inicio.`
-          : `Removido ${result.removedItem.value} apos buscar entre ${result.inspectedCount} itens.`,
+          ? `${result.removedItem.value} foi removido diretamente do inicio.`
+          : `${result.removedItem.value} foi removido apos comparar ${result.inspectedCount} itens.`,
     })
   }
 
@@ -97,6 +129,9 @@ export function PriorityQueue() {
         <div>
           <p className="eyebrow">Lista de prioridade</p>
           <h2>Compare insercao e remocao por prioridade</h2>
+          <p className="section-note">
+            Numeros maiores representam prioridades maiores. Observe como o custo da operacao muda em cada modo.
+          </p>
         </div>
         <span className="mode-chip">{mode === 'ordered' ? 'Ordenada' : 'Nao ordenada'}</span>
       </div>
@@ -105,7 +140,7 @@ export function PriorityQueue() {
         <form className="priority-form" onSubmit={handleSubmit}>
           <label>
             Valor
-            <input value={value} onChange={(event) => setValue(event.target.value)} placeholder="Ex.: tarefa A" />
+            <input value={value} onChange={(event) => setValue(event.target.value)} placeholder="Ex.: Entregar resumo" />
           </label>
           <label>
             Prioridade
@@ -141,6 +176,10 @@ export function PriorityQueue() {
             </button>
           </div>
           <p className="step-text">{modeDescription}</p>
+          <div className="operation-summary">
+            <span>{mode === 'ordered' ? 'Insercao: ordena' : 'Insercao: final'}</span>
+            <span>{mode === 'ordered' ? 'Remocao: inicio' : 'Remocao: busca'}</span>
+          </div>
           <button className="secondary-button" disabled={queue.length === 0} onClick={handleRemoveHighestPriority} type="button">
             Remover maior prioridade
           </button>
@@ -152,10 +191,11 @@ export function PriorityQueue() {
           <span className="empty-state">Nenhum item na lista.</span>
         ) : (
           queue.map((item, index) => (
-            <article className="priority-item" key={item.id}>
+            <article className={getPriorityItemClass(item, highestPriorityItem)} key={item.id}>
               <span className="priority-index">{index + 1}</span>
               <strong>{item.value}</strong>
               <small>prioridade {item.priority}</small>
+              {item.id === highestPriorityItem?.id && <span className="priority-badge">maior prioridade</span>}
             </article>
           ))
         )}

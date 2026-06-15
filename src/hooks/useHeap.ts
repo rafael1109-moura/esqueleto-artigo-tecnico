@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { HeapItem, HeapMode, HeapSlot, ValidationResult } from '../types'
-import { generateRandomValues } from '../utils/heapUtils'
+import { generateRandomValues, sortedValues } from '../utils/heapUtils'
 import { buildHeapSortSteps } from '../utils/heapSort'
 import { validateHeap } from '../utils/validation'
 
@@ -25,10 +25,7 @@ export function useHeap() {
 
   const availableValues = values.filter((item) => !placedIds.has(item.id))
   const sortSteps = useMemo(() => buildHeapSortSteps(values.map((item) => item.value)), [values])
-  const sortedList = useMemo(
-    () => values.map((item) => item.value).toSorted((a, b) => a - b),
-    [values],
-  )
+  const sortedList = sortedValues(values)
 
   function generateNewExercise() {
     setValues(generateRandomValues(SLOT_COUNT))

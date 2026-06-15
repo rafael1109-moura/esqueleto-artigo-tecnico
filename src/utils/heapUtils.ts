@@ -23,5 +23,5 @@ export function compareForHeap(parent: number, child: number, mode: HeapMode) {
 }
 
 export function sortedValues(values: HeapItem[]) {
-  return values.map((item) => item.value).toSorted((a, b) => a - b)
+  return [...values.map((item) => item.value)].sort((a, b) => a - b)
 }

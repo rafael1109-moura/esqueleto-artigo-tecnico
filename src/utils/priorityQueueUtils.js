@@ -4,6 +4,10 @@ export function comparePriority(firstItem, secondItem) {
   return secondItem.priority - firstItem.priority
 }
 
+export function sortByPriority(queue) {
+  return [...queue].sort(comparePriority)
+}
+
 export function createPriorityQueueItem(value, priority) {
   return {
     id: `priority-${Date.now()}-${Math.random().toString(16).slice(2)}`,
@@ -19,11 +23,15 @@ export function insertUnordered(queue, item) {
 
 export function insertOrdered(queue, item) {
   // Na lista ordenada pagamos o custo na insercao para manter a maior prioridade no inicio.
-  return [...queue, item].toSorted(comparePriority)
+  return sortByPriority([...queue, item])
 }
 
 export function insertByMode(queue, item, mode) {
   return mode === 'ordered' ? insertOrdered(queue, item) : insertUnordered(queue, item)
+}
+
+export function normalizeQueueForMode(queue, mode) {
+  return mode === 'ordered' ? sortByPriority(queue) : queue
 }
 
 export function findHighestPriorityIndex(queue) {
@@ -64,4 +72,9 @@ export function removeHighestPriorityOrdered(queue) {
 
 export function removeHighestPriorityByMode(queue, mode) {
   return mode === 'ordered' ? removeHighestPriorityOrdered(queue) : removeHighestPriorityUnordered(queue)
+}
+
+export function getHighestPriorityItem(queue) {
+  const highestPriorityIndex = findHighestPriorityIndex(queue)
+  return highestPriorityIndex === -1 ? null : queue[highestPriorityIndex]
 }
