@@ -1,6 +1,7 @@
 import { Controls } from '../components/Controls'
 import { Feedback } from '../components/Feedback'
 import { HeapTree } from '../components/HeapTree'
+import { PriorityQueue } from '../components/PriorityQueue'
 import { useHeap } from '../hooks/useHeap'
 
 function Home() {
@@ -10,11 +11,11 @@ function Home() {
     <main className="app-shell">
       <section className="intro-band">
         <div>
-          <p className="eyebrow">Estruturas de dados interativas</p>
-          <h1>Heap, HeapSort e Lista Ordenada</h1>
+          <h1>Heap, HeapSort e Listas de Prioridade</h1>
           <p className="intro-text">
-            Monte uma arvore completa, valide a regra de heap e acompanhe como os mesmos valores se transformam em uma
-            lista ordenada.
+            Compare listas de prioridade nao ordenadas, listas ordenadas e heaps. A lista nao ordenada insere rapido no
+            final, mas precisa buscar o maior item ao remover. A lista ordenada mantem os valores em ordem crescente,
+            facilita buscas, mas nao possui estrutura em arvore como o heap.
           </p>
         </div>
       </section>
@@ -35,10 +36,10 @@ function Home() {
           </p>
         </article>
         <article>
-          <h2>Lista ordenada</h2>
+          <h2>Lista de Prioridade</h2>
           <p>
-            A lista ordenada mostra todos os valores em ordem crescente. Ela facilita buscas sequenciais, mas nao tem a
-            mesma forma de arvore do heap.
+            Organiza elementos por prioridade, não por ordem de inserção. O item com maior (ou menor) 
+            prioridade é removido primeiro. Pode ser implementada de forma ordenada ou não ordenada.
           </p>
         </article>
       </section>
@@ -79,6 +80,8 @@ function Home() {
           onValidate={heap.validateCurrentHeap}
         />
       </section>
+
+      <PriorityQueue />
     </main>
   )
 }

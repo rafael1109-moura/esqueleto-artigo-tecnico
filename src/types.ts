@@ -29,3 +29,11 @@ export type SortStep = {
   activeIndices: number[]
   description: string
 }
+
+export type PriorityQueueMode = 'unordered' | 'ordered'
+
+export type PriorityQueueItem = {
+  id: string
+  value: string
+  priority: number
+}
