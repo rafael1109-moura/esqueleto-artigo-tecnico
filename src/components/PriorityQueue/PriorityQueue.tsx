@@ -18,15 +18,15 @@ const initialItems: PriorityQueueItem[] = [
   { id: 'priority-example-1', value: 'Fazer atividade', priority: 3 },
   { id: 'priority-example-2', value: 'Estudar prova', priority: 5 },
   { id: 'priority-example-3', value: 'Responder e-mail', priority: 1 },
-  { id: 'priority-example-4', value: 'Revisar codigo', priority: 4 },
+  { id: 'priority-example-4', value: 'Revisar código', priority: 4 },
 ]
 
 function getModeDescription(mode: PriorityQueueMode) {
   if (mode === 'ordered') {
-    return 'Insercao reorganiza a lista por prioridade. Remocao sai direto do primeiro item.'
+    return 'Inserção reorganiza a lista por prioridade. Remoção sai direto do primeiro item.'
   }
 
-  return 'Insercao vai para o final. Remocao percorre a lista para buscar a maior prioridade.'
+  return 'Inserção vai para o final. Remoção percorre a lista para buscar a maior prioridade.'
 }
 
 function parsePriorityInput(priority: string) {
@@ -71,8 +71,8 @@ export function PriorityQueue() {
       tone: 'neutral',
       text:
         nextMode === 'ordered'
-          ? 'Modo ordenado ativo: a maior prioridade fica no inicio.'
-          : 'Modo nao ordenado ativo: novos itens entram no final e a remocao faz busca.',
+          ? 'Modo ordenado ativo: a maior prioridade fica no início.'
+          : 'Modo não ordenado ativo: novos itens entram no final e a remoção faz busca.',
     })
   }
 
@@ -88,7 +88,7 @@ export function PriorityQueue() {
     }
 
     if (numericPriority === null) {
-      setMessage({ tone: 'error', text: 'Informe uma prioridade numerica maior ou igual a zero.' })
+      setMessage({ tone: 'error', text: 'Informe uma prioridade numérica maior ou igual a zero.' })
       return
     }
 
@@ -101,7 +101,7 @@ export function PriorityQueue() {
       text:
         mode === 'ordered'
           ? `${item.value} entrou e a lista foi reorganizada por prioridade.`
-          : `${item.value} entrou no final da lista nao ordenada.`,
+          : `${item.value} entrou no final da lista não ordenada.`,
     })
   }
 
@@ -118,8 +118,8 @@ export function PriorityQueue() {
       tone: 'success',
       text:
         mode === 'ordered'
-          ? `${result.removedItem.value} foi removido diretamente do inicio.`
-          : `${result.removedItem.value} foi removido apos comparar ${result.inspectedCount} itens.`,
+          ? `${result.removedItem.value} foi removido diretamente do início.`
+          : `${result.removedItem.value} foi removido após comparar ${result.inspectedCount} itens.`,
     })
   }
 
@@ -128,9 +128,9 @@ export function PriorityQueue() {
       <div className="section-heading">
         <div>
           <p className="eyebrow">Lista de prioridade</p>
-          <h2>Compare insercao e remocao por prioridade</h2>
+          <h2>Compare inserção e remoção por prioridade</h2>
           <p className="section-note">
-            Numeros maiores representam prioridades maiores. Observe como o custo da operacao muda em cada modo.
+            Números maiores representam prioridades maiores. Observe como o custo da operação muda em cada modo.
           </p>
         </div>
         <span className="mode-chip">{mode === 'ordered' ? 'Ordenada' : 'Nao ordenada'}</span>
@@ -165,7 +165,7 @@ export function PriorityQueue() {
               onClick={() => handleModeChange('unordered')}
               type="button"
             >
-              Nao ordenada
+              Não ordenada
             </button>
             <button
               className={mode === 'ordered' ? 'active' : ''}
@@ -177,8 +177,8 @@ export function PriorityQueue() {
           </div>
           <p className="step-text">{modeDescription}</p>
           <div className="operation-summary">
-            <span>{mode === 'ordered' ? 'Insercao: ordena' : 'Insercao: final'}</span>
-            <span>{mode === 'ordered' ? 'Remocao: inicio' : 'Remocao: busca'}</span>
+            <span>{mode === 'ordered' ? 'Inserção: ordena' : 'Inserção: final'}</span>
+            <span>{mode === 'ordered' ? 'Remoção: início' : 'Remoção: busca'}</span>
           </div>
           <button className="secondary-button" disabled={queue.length === 0} onClick={handleRemoveHighestPriority} type="button">
             Remover maior prioridade

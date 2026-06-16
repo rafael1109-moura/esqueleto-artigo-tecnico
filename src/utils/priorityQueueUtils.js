@@ -1,5 +1,5 @@
-// A maior prioridade e representada pelo maior numero.
-// Essa regra unica permite comparar os dois modos sem duplicar a logica.
+// A maior prioridade é representada pelo maior número.
+// Essa regra única permite comparar os dois modos sem duplicar a lógica.
 export function comparePriority(firstItem, secondItem) {
   return secondItem.priority - firstItem.priority
 }
@@ -17,12 +17,12 @@ export function createPriorityQueueItem(value, priority) {
 }
 
 export function insertUnordered(queue, item) {
-  // Na lista nao ordenada a insercao e O(1): o novo item vai para o final.
+  // Na lista não ordenada a inserção é O(1): o novo item vai para o final.
   return [...queue, item]
 }
 
 export function insertOrdered(queue, item) {
-  // Na lista ordenada pagamos o custo na insercao para manter a maior prioridade no inicio.
+  // Na lista ordenada pagamos o custo na inserção para manter a maior prioridade no início.
   return sortByPriority([...queue, item])
 }
 
@@ -52,7 +52,7 @@ export function removeHighestPriorityUnordered(queue) {
     return { nextQueue: queue, removedItem: null, inspectedCount: 0 }
   }
 
-  // Como a lista nao esta ordenada, a remocao precisa buscar a maior prioridade.
+  // Como a lista não está ordenada, a remoção precisa buscar a maior prioridade.
   return {
     nextQueue: queue.filter((_, index) => index !== highestPriorityIndex),
     removedItem: queue[highestPriorityIndex],
@@ -65,7 +65,7 @@ export function removeHighestPriorityOrdered(queue) {
     return { nextQueue: queue, removedItem: null, inspectedCount: 0 }
   }
 
-  // Como a lista ja esta ordenada por prioridade, o primeiro item e removido diretamente.
+  // Como a lista já está ordenada por prioridade, o primeiro item é removido diretamente.
   const [removedItem, ...nextQueue] = queue
   return { nextQueue, removedItem, inspectedCount: 1 }
 }

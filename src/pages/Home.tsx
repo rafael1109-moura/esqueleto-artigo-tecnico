@@ -11,38 +11,37 @@ function Home() {
     <main className="app-shell">
       <section className="intro-band">
         <div>
-          <p className="eyebrow">Estruturas de dados interativas</p>
+          <p className="eyebrow"></p>
           <h1>Heap, HeapSort e Listas de Prioridade</h1>
           <p className="intro-text">
-            Explore as mesmas ideias por tres perspectivas: montar um heap como arvore, acompanhar o HeapSort passo a
-            passo e comparar listas de prioridade. A lista nao ordenada insere rapido no final, enquanto a lista ordenada
-            mantem os valores em ordem crescente, facilita buscas, mas nao possui estrutura em arvore como o heap.
+            Explore as mesmas ideias por três perspectivas: montar um heap como árvore, acompanhar o HeapSort 
+            passo a passo e comparar listas de prioridade. A lista não ordenada insere rápido no final, enquanto a lista 
+            ordenada mantém os valores em ordem crescente, facilita buscas, mas não possui estrutura em árvore como o heap.
           </p>
         </div>
       </section>
 
       <section className="lesson-band">
         <article>
-          <h2>O que e um Heap?</h2>
+          <h2>O que é um Heap?</h2>
           <p>
-            Heap e uma arvore binaria completa em que cada pai respeita uma regra em relacao aos filhos. No min-heap, o
-            pai e menor ou igual aos filhos. No max-heap, o pai e maior ou igual. A raiz concentra o valor mais
-            importante para a regra escolhida.
+            Heap é uma árvore binária completa em que cada pai respeita uma regra em relação aos filhos. 
+            No min-heap, o pai é menor ou igual aos filhos. No max-heap, o pai é maior ou igual. 
+            A raiz concentra o valor mais importante para a regra escolhida.
           </p>
         </article>
         <article>
           <h2>HeapSort</h2>
           <p>
-            O HeapSort cria um max-heap, extrai repetidamente o maior valor e coloca esse valor na parte ordenada da
-            lista. A visualizacao destaca o trecho que ainda e heap e o trecho que ja foi ordenado.
+            O HeapSort cria um max-heap, extrai repetidamente o maior valor e coloca esse valor na parte ordenada da lista. 
+            A visualização destaca o trecho que ainda é heap e o trecho que já foi ordenado.
           </p>
         </article>
         <article>
-          <h2>Listas e heap</h2>
+          <h2>Lista de Prioridade</h2>
           <p>
-            Listas guardam elementos em sequencia. O heap organiza valores como uma arvore binaria completa e garante
-            acesso eficiente ao menor ou maior valor. A lista de prioridade mostra o contraste entre inserir rapido e
-            remover rapido.
+            Organiza elementos por prioridade, não por ordem de inserção. O item com maior (ou menor) 
+            prioridade é removido primeiro. Pode ser implementada de forma ordenada ou não ordenada.
           </p>
         </article>
       </section>
@@ -51,10 +50,10 @@ function Home() {
         <div className="heap-area">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">Pratica</p>
+              <p className="eyebrow">Prática</p>
               <h2>Monte o heap manualmente</h2>
               <p className="section-note">
-                Preencha todos os nos e valide se cada pai respeita a regra do modo selecionado.
+                Preencha todos os nós e valide se cada pai respeita a regra do modo selecionado.
               </p>
             </div>
             <span className="mode-chip">{heap.mode === 'min' ? 'Min-Heap' : 'Max-Heap'}</span>

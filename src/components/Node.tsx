@@ -28,11 +28,11 @@ export function Node({ index, item, isInvalid, onClear, onDropItem, onSelectSlot
       onDragOver={(event) => event.preventDefault()}
       onDrop={handleDrop}
       type="button"
-      aria-label={item ? `No ${index + 1}, valor ${item.value}` : `No vazio ${index + 1}`}
+      aria-label={item ? `Nó ${index + 1}, valor ${item.value}` : `Nó vazio ${index + 1}`}
       title="Clique para inserir o valor selecionado. Clique direito para limpar."
     >
       <span>{item?.value ?? '+'}</span>
-      <small>{index === 0 ? 'raiz' : `no ${index + 1}`}</small>
+      <small>{index === 0 ? 'raiz' : `nó ${index + 1}`}</small>
     </button>
   )
 }

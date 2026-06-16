@@ -42,12 +42,12 @@ export function Controls({
     <aside className="workbench">
       <section className="tool-panel">
         <div className="panel-heading">
-          <h2>Valores do exercicio</h2>
+          <h2>Valores do exercício</h2>
           <button className="ghost-button" onClick={onGenerate} type="button">
             Gerar novo
           </button>
         </div>
-        <div className="value-bank" aria-label="Valores disponiveis">
+        <div className="value-bank" aria-label="Valores disponíveis">
           {availableValues.length === 0 ? (
             <span className="empty-state">Todos os valores foram posicionados.</span>
           ) : (
@@ -82,7 +82,7 @@ export function Controls({
             Validar heap
           </button>
           <button className="secondary-button" onClick={onResetTree} type="button">
-            Limpar arvore
+            Limpar árvore
           </button>
         </div>
       </section>
@@ -127,7 +127,7 @@ export function Controls({
             onClick={onNextStep}
             type="button"
           >
-            Proximo
+            Próximo
           </button>
         </div>
       </section>

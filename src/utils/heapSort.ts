@@ -46,7 +46,7 @@ export function buildHeapSortSteps(inputValues: number[]): SortStep[] {
       heap: [...values],
       sorted: [],
       activeIndices: [],
-      description: 'Comecamos com os mesmos valores do exercicio.',
+      description: 'Começamos com os mesmos valores do exercício.',
     },
   ]
 
@@ -59,7 +59,7 @@ export function buildHeapSortSteps(inputValues: number[]): SortStep[] {
     heap: [...values],
     sorted: [],
     activeIndices: [0],
-    description: 'O maior valor esta na raiz. Agora ele pode ser levado para o fim da lista.',
+    description: 'O maior valor está na raiz. Agora ele pode ser levado para o fim da lista.',
   })
 
   for (let heapSize = values.length; heapSize > 1; heapSize -= 1) {
@@ -69,7 +69,7 @@ export function buildHeapSortSteps(inputValues: number[]): SortStep[] {
       heap: values.slice(0, heapSize - 1),
       sorted: values.slice(heapSize - 1),
       activeIndices: [0, heapSize - 1],
-      description: `Movemos ${values[heapSize - 1]} para a area ordenada.`,
+      description: `Movemos ${values[heapSize - 1]} para a área ordenada.`,
     })
 
     heapifyDown(values, 0, heapSize - 1, steps)
@@ -80,7 +80,7 @@ export function buildHeapSortSteps(inputValues: number[]): SortStep[] {
     heap: [],
     sorted: [...values],
     activeIndices: [],
-    description: 'Quando o heap fica vazio, todos os valores estao em ordem crescente.',
+    description: 'Quando o heap fica vazio, todos os valores estão em ordem crescente.',
   })
 
   return steps

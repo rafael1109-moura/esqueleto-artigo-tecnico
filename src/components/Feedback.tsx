@@ -8,7 +8,7 @@ export function Feedback({ feedback }: FeedbackProps) {
   if (!feedback) {
     return (
       <div className="feedback neutral">
-        Selecione ou arraste valores para os nos, depois valide a propriedade de heap.
+        Selecione ou arraste valores para os nós, depois valide a propriedade de heap.
       </div>
     )
   }
@@ -17,7 +17,7 @@ export function Feedback({ feedback }: FeedbackProps) {
     <div className={`feedback ${feedback.isValid ? 'success' : 'error'}`}>
       <strong>{feedback.isValid ? 'Correto' : 'Incorreto'}</strong>
       <span>{feedback.message}</span>
-      {feedback.issues.length > 1 && <small>Ha {feedback.issues.length} relacoes pai-filho para revisar.</small>}
+      {feedback.issues.length > 1 && <small>Há {feedback.issues.length} relações pai-filho para revisar.</small>}
     </div>
   )
 }

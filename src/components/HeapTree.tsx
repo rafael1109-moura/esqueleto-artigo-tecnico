@@ -13,7 +13,7 @@ export function HeapTree({ slots, issues, onClear, onDropItem, onSelectSlot }: H
   const invalidIndices = new Set(issues.flatMap((issue) => [issue.parentIndex, issue.childIndex]))
 
   return (
-    <div className="tree-shell" aria-label="Arvore binaria completa para montar o heap">
+    <div className="tree-shell" aria-label="Árvore binária completa para montar o heap">
       <div className="tree-lines" aria-hidden="true">
         <span className="edge edge-0-1" />
         <span className="edge edge-0-2" />

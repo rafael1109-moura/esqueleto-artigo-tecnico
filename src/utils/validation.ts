@@ -35,7 +35,7 @@ export function validateHeap(slots: HeapSlot[], mode: HeapMode): ValidationResul
       isComplete,
       isValid: false,
       issues,
-      message: 'Preencha todos os nos da arvore antes de validar o heap.',
+      message: 'Preencha todos os nós da árvore antes de validar o heap.',
     }
   }
 
