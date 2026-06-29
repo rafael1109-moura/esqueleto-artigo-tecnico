@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Controls } from '../components/Controls'
 import { Feedback } from '../components/Feedback'
 import { HeapTree } from '../components/HeapTree'
@@ -6,13 +7,43 @@ import { useHeap } from '../hooks/useHeap'
 
 function Home() {
   const heap = useHeap()
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') {
+      return 'light'
+    }
+
+    const storedTheme = window.localStorage.getItem('heap-theme')
+
+    if (storedTheme === 'light' || storedTheme === 'dark') {
+      return storedTheme
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    window.localStorage.setItem('heap-theme', theme)
+  }, [theme])
 
   return (
     <main className="app-shell">
       <section className="intro-band">
         <div>
+          <button
+            aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
+            aria-pressed={theme === 'dark'}
+            className="theme-toggle"
+            onClick={() => setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'))}
+            type="button"
+          >
+            <svg aria-hidden="true" className="theme-toggle__icon" viewBox="0 0 24 24">
+              <path d="M21 12.8A8.8 8.8 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+            </svg>
+            <span>{theme === 'dark' ? 'Claro' : 'Escuro'}</span>
+          </button>
           <p className="eyebrow"></p>
-          <h1>Heap, HeapSort e Listas de Prioridade</h1>
+          <h1 className="intro-title">Heap, HeapSort e Listas de Prioridade</h1>
           <p className="intro-text">
             Explore as mesmas ideias por três perspectivas: montar um heap como árvore, acompanhar o HeapSort 
             passo a passo e comparar listas de prioridade. A lista não ordenada insere rápido no final, enquanto a lista 
